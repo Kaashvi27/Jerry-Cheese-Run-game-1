@@ -17,6 +17,7 @@ var gameover, gameoverImg;
 var restart, restartImg;
 var score = 0;
 var sound;
+var gameoverSound;
 
 function preload(){
 bg = loadImage("bg 3.png");
@@ -27,7 +28,7 @@ obstacle3 = loadImage("Butch 2.png");
 gameoverImg = loadImage("Gameover 2.png");
 restartImg = loadImage("restart.png");
 sound = loadSound("tom__jerry_8-bit.mp3");
-
+gameoverSound = loadSound("game over sound.wav");
 cheeseImg = loadImage("Cheese.png");
 
 }
@@ -66,11 +67,11 @@ function setup() {
 
 function draw() {
   background(0);
-  gameover.visible = false;
-  restart.visible = false;
   if(gamestate ===PLAY){
+    gameover.visible = false;
+    restart.visible = false;
     ground.velocityX = -3;
-    sound.play();
+    sound.loop();
     if(ground.x<displayWidth/2){
       ground.x = ground.width/1;
      }
@@ -97,6 +98,7 @@ function draw() {
   }
   else if(gamestate ===END){
     sound.stop();
+    gameoverSound.play();
     gameover.visible = true;
     restart.visible = true;
     ground.velocityX = 0;
@@ -159,7 +161,7 @@ function spawnObstacles(){
   
 }
 function reset(){
-  sound.stop();
+  gameoverSound.stop();
   gamestate = PLAY;
   gameover.visible = false;
   restart.visible = false;
